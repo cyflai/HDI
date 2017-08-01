@@ -1,6 +1,6 @@
 ---
 #File Systme to be Create
-file_system_name: dd 
+file_system_name: FS_1
 
 #HCP Information
 hcp_host: hcp.cloudservice360.com
