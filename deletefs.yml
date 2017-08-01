@@ -1,0 +1,48 @@
+---
+- hosts: hdi
+  connection: local
+  gather_facts: no
+  vars_files:
+    - vars.yml
+
+  tasks:
+  - name: Umount
+    uri:
+     url: https://{{ hostvars['hdi']['ansible_host'] }}:9090/mapi/FileSystems/{{ item }}/MountSetting
+     method: POST
+     return_content: yes
+     validate_certs: no
+     body: "{{ lookup('template', 'fsumount.j2') }}"
+     body_format: raw
+     headers:
+      Cookie: "{{login}}"
+      Content-Type: "application/xml"
+    with_items:
+    - 2030303
+    - FS_B
+    - chriadadasdf
+    - chris123
+    - chrisabc1
+    - fs_chris
+    - iko
+    ignore_errors: yes
+
+  - name: Del FS
+    uri:
+     url: https://{{ hostvars['hdi']['ansible_host'] }}:9090/mapi/FileSystems/{{ item }}
+     method: DELETE
+     return_content: yes
+     validate_certs: no
+     body_format: raw
+     headers:
+      Cookie: "{{login}}"
+      Content-Type: "application/xml"
+    with_items:
+    - 2030303
+    - FS_B
+    - chriadadasdf
+    - chris123
+    - chrisabc1
+    - fs_chris
+    - iko
+    ignore_errors: yes

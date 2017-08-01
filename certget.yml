@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+  - name: download cert
+    get_url: 
+     url: https://raw.githubusercontent.com/cyflai/ansible/master/nasroot_ras
+     dest: ~/.ssh/nasroot_ras
+     mode: 0400
+
+  - name: ssh to HDI
+    raw: ssh -i ~/.ssh/nasroot_ras nasroot@192.168.10.151 "ls"

@@ -1,0 +1,13 @@
+---
+#File Systme to be Create
+file_system_name: dd 
+
+#HCP Information
+hcp_host: hcp.cloudservice360.com
+hcp_tenant: chris-hdi
+hcp_username: admin_chris910
+hcp_password: CDe3Q!w2
+
+#HDI Login
+hdi_username: admin
+hdi_password: Zaq!2wsX

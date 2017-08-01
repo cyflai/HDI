@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<NFSShare>
+    <exportPoint>/mnt/{{ file_system_name }}/{{ file_system_name }}_Share</exportPoint>
+    <anonymousUID>0</anonymousUID>
+    <anonymousGID>0</anonymousGID>
+    <isPortRestrictionEnabled>true</isPortRestrictionEnabled>
+    <isSubtreeCheckEnabled>true</isSubtreeCheckEnabled>
+    <isAccessCheckWithLockRequestEnabled>true</isAccessCheckWithLockRequestEnabled>
+    <maxRwSize>5</maxRwSize>
+    <AllowedHosts>
+        <AllowedHost>
+            <hostOrAddress>*</hostOrAddress>
+            <isReadOnly>true</isReadOnly>
+            <synchronousWritingSetting>rw_sync</synchronousWritingSetting>
+            <anonymousMapping>root_only</anonymousMapping>
+            <securityFlavor>sys</securityFlavor>
+        </AllowedHost>
+    </AllowedHosts>
+    <DirectorySetup>
+        <userName>root</userName>
+        <groupName>root</groupName>
+        <isStickyBit>true</isStickyBit>
+        <ownerPermission>rw</ownerPermission>
+        <groupPermission>rw</groupPermission>
+        <otherPermission>rw</otherPermission>
+    </DirectorySetup>
+    <DirectoryACLSettings>
+        <DirectoryACLSetting>
+            <userGroupAccess>allow</userGroupAccess>
+            <name>Everyone</name>
+            <accountType>g</accountType>
+            <applicationDestination>a</applicationDestination>
+            <inheritanceRange>a</inheritanceRange>
+            <accessPermission>r</accessPermission>
+        </DirectoryACLSetting>
+    </DirectoryACLSettings>
+</NFSShare>

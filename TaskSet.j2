@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MigrationTask>
+                <task-name>task</task-name>
+                <fileSystemName>{{ file_system_name }}</fileSystemName>
+                <namespace>{{ file_system_name | to_uuid }}</namespace>
+                <schedule-start-time>{{ newtime.stdout }}.000+00:00</schedule-start-time>
+                <schedule-interval>5d</schedule-interval>
+                <duration>8</duration>
+</MigrationTask>

@@ -1,0 +1,84 @@
+---
+
+- hosts: hdi
+  connection: local
+  gather_facts: no
+  vars_files:
+    - vars.yml
+
+  tasks:
+  - name: Create HDI File System
+    uri:
+     url: https://{{ hostvars['hdi']['ansible_host'] }}:9090/mapi/FileSystems
+     method: PUT
+     return_content: yes
+     validate_certs: no
+     body: "{{ lookup('template', 'fscreate.j2') }}"
+     body_format: raw
+     headers:
+      Cookie: api-auth={{ hdi_username | b64encode }}:{{ hdi_password | hash('md5') }}
+      Content-Type: "application/xml"
+
+  - name: Mounting FileSystem
+    uri:
+     url: https://{{ hostvars['hdi']['ansible_host'] }}:9090/mapi/FileSystems/{{ file_system_name  }}/MountSetting
+     method: POST
+     return_content: yes
+     validate_certs: no
+     body: "{{ lookup('template', 'fsmount.j2') }}"
+     body_format: raw
+     headers:
+      Cookie: api-auth={{ hdi_username | b64encode }}:{{ hdi_password | hash('md5') }}
+      Content-Type: "application/xml"
+
+  - name: Creating CIFS Share
+    uri:
+     url: https://{{ hostvars['hdi']['ansible_host'] }}:9090/mapi/CIFSShares
+     method: PUT
+     return_content: yes
+     validate_certs: no
+     body: "{{ lookup('template', 'CIFSShare.j2') }}"
+     body_format: raw
+     headers:
+      Cookie: api-auth={{ hdi_username | b64encode }}:{{ hdi_password | hash('md5') }}
+      Content-Type: "application/xml"
+
+  - name: Creating NFS Share
+    uri:
+     url: https://{{ hostvars['hdi']['ansible_host'] }}:9090/mapi/NFSShares
+     method: PUT
+     return_content: yes
+     validate_certs: no
+     body: "{{ lookup('template', 'NFSShares.j2') }}"
+     body_format: raw
+     headers:
+      Cookie: api-auth={{ hdi_username | b64encode }}:{{ hdi_password | hash('md5') }}
+      Content-Type: "application/xml"
+
+  - name: Creating HCP Namespace
+    uri:
+     url: https://{{hcp_tenant}}.{{hcp_host}}:9090/mapi/tenants/{{ hcp_tenant }}/namespaces
+     method: PUT
+     return_content: yes
+     validate_certs: no
+     body: "{{ lookup('template', 'hcp_namespaces.j2') }}"
+     body_format: raw
+     headers:
+      Authorization: HCP {{ hcp_username | b64encode }}:{{ hcp_password | hash('md5') }}
+      Content-Type: "application/xml"
+
+  - name: get current time
+    shell: date -d '+1 hour' '+%Y-%m-%dT%R:00'
+    register: newtime
+
+  - name: Creating Migration Task to HCP
+    uri:
+     url: https://{{ hostvars['hdi']['ansible_host'] }}:9090/mapi/MigrationTask
+     method: PUT
+     return_content: yes
+     validate_certs: no
+     body: "{{ lookup('template', 'TaskSet.j2') }}"
+     body_format: raw
+     headers:
+      Cookie: api-auth={{ hdi_username | b64encode }}:{{ hdi_password | hash('md5') }}
+      Content-Type: "application/xml"

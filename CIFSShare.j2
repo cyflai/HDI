@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<CIFSShare>
+    <exportPoint>/mnt/{{ file_system_name }}/{{ file_system_name }}_share</exportPoint>
+    <cifsShareName>{{ file_system_name }}_share</cifsShareName>
+    <isClassicAcl>false</isClassicAcl>
+    <isAclEnabled>true</isAclEnabled>
+    <isReadOnly>false</isReadOnly>
+    <isBrowseEnabled>true</isBrowseEnabled>
+    <guestAccessPermission>default</guestAccessPermission>
+    <diskSynchronizationPolicy>default</diskSynchronizationPolicy>
+    <cifsClientCacheSetting>default</cifsClientCacheSetting>
+    <isHomeDirectoryEnabled>true</isHomeDirectoryEnabled>
+    <clientAccessPolicy>default</clientAccessPolicy>
+    <vssUse>default</vssUse>
+    <cifsClientRoCacheOptimize>default</cifsClientRoCacheOptimize>
+    <accessBasedEnumeration>default</accessBasedEnumeration>
+    <smbEncryption>default</smbEncryption>
+    <DirectorySetup>
+        <userName>root</userName>
+        <groupName>root</groupName>
+        <isStickyBit>true</isStickyBit>
+        <ownerPermission>rw</ownerPermission>
+        <groupPermission>rw</groupPermission>
+        <otherPermission>rw</otherPermission>
+    </DirectorySetup>
+    <DirectoryACLSettings>
+        <DirectoryACLSetting>
+            <userGroupAccess>allow</userGroupAccess>
+            <name>Everyone</name>
+            <accountType>g</accountType>
+            <applicationDestination>a</applicationDestination>
+            <inheritanceRange>a</inheritanceRange>
+            <accessPermission>r</accessPermission>
+        </DirectoryACLSetting>
+    </DirectoryACLSettings>
+</CIFSShare>
