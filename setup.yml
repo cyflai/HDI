@@ -53,18 +53,6 @@
       Cookie: api-auth={{ hdi_username | b64encode }}:{{ hdi_password | hash('md5') }}
       Content-Type: "application/xml"
 
-  - name: Creating NFS Share
-    uri:
-     url: https://{{ hostvars['hdi']['ansible_host'] }}:9090/mapi/NFSShares
-     method: PUT
-     return_content: yes
-     validate_certs: no
-     body: "{{ lookup('template', 'NFSShares.j2') }}"
-     body_format: raw
-     headers:
-      Cookie: api-auth={{ hdi_username | b64encode }}:{{ hdi_password | hash('md5') }}
-      Content-Type: "application/xml"
-
   - name: Creating HCP Namespace
     uri:
      url: https://{{hcp_tenant}}.{{hcp_host}}:9090/mapi/tenants/{{ hcp_tenant }}/namespaces
