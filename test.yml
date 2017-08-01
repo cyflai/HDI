@@ -3,21 +3,12 @@
 - hosts: hdi
   connection: local
   gather_facts: no
+  vars_files:
+    - vars.yml
 
   tasks:
-  - name: HCP Linking
-    uri:
-     url: https://{{ hostvars['hdi']['ansible_host'] }}:9090/mapi/HCP
-     method: POST
-     return_content: yes
-     validate_certs: no
-     body: "{{ lookup('template', 'hcp.j2') }}"
-     body_format: raw
-     headers:
-      Cookie: api-auth={{ hdi_username | b64encode }}:{{ hdi_password | hash('md5') }}
-      Content-Type: "application/xml"
 
-  - name: Create HDI File System
+  - name: Creating HDI File System
     uri:
      url: https://{{ hostvars['hdi']['ansible_host'] }}:9090/mapi/FileSystems
      method: PUT
