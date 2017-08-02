@@ -3,6 +3,8 @@
 - hosts: hdi
   connection: local
   gather_facts: no
+  vars:
+   namespaces_name: {{ 9999999999999999999999 | random | to_uuid }}
 
   tasks:
   - name: HCP Linking
