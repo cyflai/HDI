@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <FileSystem>
     <fileSystemName>{{ file_system_name }}</fileSystemName>
-    <fileSystemSizeInGigaByte>1</fileSystemSizeInGigaByte>
+    <fileSystemSizeInGigaByte>{{ file_system_size }}</fileSystemSizeInGigaByte>
     <aclType>Advanced ACL</aclType>
+    <workSpaceSizeInGigaByte>{{ hdi_cache_size }}</workSpaceSizeInGigaByte>
     <NamespaceShareSettings>
     	<namespaceType>FileSystem</namespaceType>
         <type>Read/Write</type>

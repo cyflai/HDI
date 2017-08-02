@@ -15,16 +15,27 @@
      body: "{{ lookup('template', 'fsumount.j2') }}"
      body_format: raw
      headers:
-      Cookie: "{{login}}"
+      Cookie: api-auth={{ hdi_username | b64encode }}:{{ hdi_password | hash('md5') }}
       Content-Type: "application/xml"
     with_items:
-    - 2030303
-    - FS_B
-    - chriadadasdf
-    - chris123
-    - chrisabc1
-    - fs_chris
-    - iko
+    - F1
+    - F2
+    - F3
+    - F4
+    - F5
+    - F6
+    - F7
+    - F8
+    - F9
+    - F10
+    - F11
+    - F12
+    - F13
+    - F14
+    - F15
+    - F16
+    - F17
+    - F18
     ignore_errors: yes
 
   - name: Del FS
@@ -35,14 +46,25 @@
      validate_certs: no
      body_format: raw
      headers:
-      Cookie: "{{login}}"
+      Cookie: api-auth={{ hdi_username | b64encode }}:{{ hdi_password | hash('md5') }}
       Content-Type: "application/xml"
     with_items:
-    - 2030303
-    - FS_B
-    - chriadadasdf
-    - chris123
-    - chrisabc1
-    - fs_chris
-    - iko
+    - F1
+    - F2
+    - F3
+    - F4
+    - F5
+    - F6
+    - F7
+    - F8
+    - F9
+    - F10
+    - F11
+    - F12
+    - F13
+    - F14
+    - F15
+    - F16
+    - F17
+    - F18
     ignore_errors: yes

@@ -3,10 +3,18 @@
 - hosts: hdi
   connection: local
   gather_facts: no
-  vars:
-   namespaces_name: {{ 9999999999999999999999 | random | to_uuid }}
+#  vars:
+#   namespace_name: "{{ 999999999999 | random | to_uuid }}"
+  vars_files:
+    - vars.yml
+
 
   tasks:
+  - set_fact:
+     namespace_name: "{{ 999999999999 | random | to_uuid }}"
+    run_once: yes
+
+
   - name: HCP Linking
     uri:
      url: https://{{ hostvars['hdi']['ansible_host'] }}:9090/mapi/HCP
@@ -62,6 +70,18 @@
      return_content: yes
      validate_certs: no
      body: "{{ lookup('template', 'hcp_namespaces.j2') }}"
+     body_format: raw
+     headers:
+      Authorization: HCP {{ hcp_username | b64encode }}:{{ hcp_password | hash('md5') }}
+      Content-Type: "application/xml"
+
+  - name: Setup Data Access Permission
+    uri:
+     url: https://{{hcp_tenant}}.{{hcp_host}}:9090/mapi/tenants/{{ hcp_tenant }}/userAccounts/{{ hcp_username }}/dataAccessPermissions
+     method: POST
+     return_content: yes
+     validate_certs: no
+     body: "{{ lookup('template', 'dataaccesspermission.j2') }}"
      body_format: raw
      headers:
       Authorization: HCP {{ hcp_username | b64encode }}:{{ hcp_password | hash('md5') }}
