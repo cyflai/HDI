@@ -85,7 +85,7 @@
       Content-Type: "application/xml"
 
   - set_fact:
-      newtime: {{ lookup('pipe','date -d \"+1 hour\" \"+%Y-%m-%dT%R:00\"')}}
+      newtime: "{{ lookup('pipe','date -d \"+1 hour\" \"+%Y-%m-%dT%R:00\"')}}"
 
   - name: Creating Migration Task to HCP
     uri:
