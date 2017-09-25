@@ -84,9 +84,9 @@
       Authorization: HCP {{ hcp_username | b64encode }}:{{ hcp_password | hash('md5') }}
       Content-Type: "application/xml"
 
-  - name: get current time
-    shell: date -d '+1 hour' '+%Y-%m-%dT%R:00'
-    register: newtime
+  - name: set frist time migration time
+    set_fact:
+      newtime: {{ lookup('pipe','date -d \"+1 hour\" \"+%Y-%m-%dT%R:00\"')}}
 
   - name: Creating Migration Task to HCP
     uri:
