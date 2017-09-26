@@ -10,7 +10,11 @@
   tasks:
   - set_fact:
      namespace_name: "{{ 999999999999 | random | to_uuid }}"
+     newtime: "{{ ansible_date_time.iso8601[:19] | to_datetime('%Y-%m-%dT%H:%M:%S') | add_time(minutes=60) | regex_replace('\\s+', 'T') }}"
     run_once: yes
+
+  - pause:
+     seconds: 10
 
   - name: HCP Linking
     uri:
@@ -72,6 +76,7 @@
       Authorization: HCP {{ hcp_username | b64encode }}:{{ hcp_password | hash('md5') }}
       Content-Type: "application/xml"
 
+
   - name: Setup Data Access Permission
     uri:
      url: https://{{hcp_tenant}}.{{hcp_host}}:9090/mapi/tenants/{{ hcp_tenant }}/userAccounts/{{ hcp_username }}/dataAccessPermissions
@@ -83,9 +88,6 @@
      headers:
       Authorization: HCP {{ hcp_username | b64encode }}:{{ hcp_password | hash('md5') }}
       Content-Type: "application/xml"
-
-  - set_fact:
-      newtime: "{{ ansible_date_time.iso8601[:19] | to_datetime('%Y-%m-%dT%H:%M:%S') | add_time(minutes=60) | regex_replace('\\s+', 'T') }}"
 
   - name: Creating Migration Task to HCP
     uri:
