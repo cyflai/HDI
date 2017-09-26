@@ -85,7 +85,7 @@
       Content-Type: "application/xml"
 
   - set_fact:
-      newtime: "{{ lookup('pipe','date -d \"+1 hour\" \"+%Y-%m-%dT%R:00\"')}}"
+      newtime: "{{ ansible_date_time.iso8601[:19] | to_datetime('%Y-%m-%dT%H:%M:%S') | add_time(minutes=60) | regex_replace('\\s+', 'T') }}"
 
   - name: Creating Migration Task to HCP
     uri:
